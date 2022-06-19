@@ -1,0 +1,25 @@
+.question{
+margin: 5px 10px;
+font-size: 16px;
+font-weight: bold;
+}
+.list{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    font-size: 10.24px;
+    font-weight: 300;
+}
+.options{
+    margin: 5px 5px;
+    background: white;
+    padding: 5px 10px;
+    border-radius: 0.5em;
+    cursor: pointer;
+    border-style: none;
+    color: black;
+
+}
+hr{
+    margin: 10px 10px;
+}
