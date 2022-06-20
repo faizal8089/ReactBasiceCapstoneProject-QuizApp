@@ -30,3 +30,9 @@
     font-size: 16px;
     font-weight: 200;
 }
+.loadingScreen{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

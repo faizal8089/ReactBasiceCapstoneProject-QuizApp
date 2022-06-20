@@ -4,6 +4,7 @@ import Questions from "./Questions";
 import { nanoid } from "nanoid";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
+import ReactLoading from "react-loading";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -59,6 +60,7 @@ const Main = () => {
         setEls(simplifiedData);
       } catch (error) {
         console.log(error);
+        fetchData();
       }
     };
     fetchData();
@@ -108,6 +110,18 @@ const Main = () => {
 
   return (
     <div>
+      <center>
+        {data.length === 0 && (
+          <ReactLoading
+            className="loadingScreen"
+            type={"bars"}
+            color={"#ffffff"}
+            height={"20%"}
+            width={"20%"}
+          />
+        )}
+      </center>
+
       {!checkAnswer && data.length !== 0 && (
         <center>
           <h3>Choose option wisely... cannot change option once selected ! </h3>
