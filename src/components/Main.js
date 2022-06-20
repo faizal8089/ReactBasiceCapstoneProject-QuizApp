@@ -50,6 +50,7 @@ const Main = () => {
             };
           });
           return {
+            optionLocked: false,
             question: item.question,
             correctAnswer: item.correct_answer,
             options: options,
@@ -63,24 +64,56 @@ const Main = () => {
     fetchData();
   }, []);
 
+  function updateOptions(thing, index, correctAnswer) {
+    const updatedColor = {
+      option: thing.option,
+      isLocked: true,
+      color: { backgroundColor: "red", color: "white" },
+    };
+
+    setEls((pre) => {
+      return pre.map((item) => {
+        return item.correctAnswer === correctAnswer
+          ? {
+              ...item,
+              optionLocked: true,
+              options: Object.values({
+                ...item.options,
+                [index]: updatedColor,
+              }),
+            }
+          : item;
+      });
+    });
+  }
+
   useEffect(() => {
     localStorage.setItem("checkAnswer", JSON.stringify(checkAnswer));
     const elements = els.map((item) => {
       return (
         <Questions
           key={nanoid()}
+          optionLocked={item.optionLocked}
           question={item.question}
           correctAnswer={item.correctAnswer}
           options={item.options}
           scorePlus={countScore}
+          updateOptions={updateOptions}
         />
       );
     });
 
     setData(elements);
   }, [checkAnswer, els]);
+
   return (
     <div>
+      {!checkAnswer && data.length !== 0 && (
+        <center>
+          <h3>Choose option wisely... cannot change option once selected ! </h3>
+          <hr />
+        </center>
+      )}
       {score === data.length && checkAnswer && <Confetti />}
       {data}
       <center>

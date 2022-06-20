@@ -2,15 +2,21 @@ import "../css/questions.scss";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const Questions = ({ question, correctAnswer, options, scorePlus }) => {
-  console.log(correctAnswer);
-  const [disable, setDisable] = useState(() => false);
+const Questions = ({
+  updateOptions,
+  question,
+  correctAnswer,
+  options,
+  scorePlus,
+  optionLocked,
+}) => {
+  // console.log(correctAnswer);
 
   const [optionElements, setoptionElements] = useState(() => {
     return options;
   });
   const [checkAnswer, setCheckAnswer] = useState(() => false);
-
+  // console.log(optionElements);
   useEffect(() => {
     const check = JSON.parse(localStorage.getItem("checkAnswer"));
     if (check) {
@@ -33,6 +39,7 @@ const Questions = ({ question, correctAnswer, options, scorePlus }) => {
   // console.log(optionElements);
   const elements = optionElements.map((item) => {
     function check(thing) {
+      updateOptions(thing, optionElements.indexOf(thing), correctAnswer);
       if (!checkAnswer) {
         setoptionElements((pre) =>
           pre.map((i) => {
@@ -52,12 +59,11 @@ const Questions = ({ question, correctAnswer, options, scorePlus }) => {
       <li key={item.option}>
         <button
           style={item.color}
-          disabled={disable || checkAnswer}
+          disabled={optionLocked || checkAnswer}
           onClick={() => {
             if (item.option === correctAnswer) {
               scorePlus();
             }
-            setDisable(true);
             check(item);
           }}
           className="options"
