@@ -23,7 +23,7 @@ const Questions = ({
       setCheckAnswer(check);
       setoptionElements((pre) =>
         pre.map((i) => {
-          return i.option === correctAnswer
+          return i.option === correctAnswer && optionLocked
             ? {
                 ...i,
                 isLocked: true,
@@ -33,7 +33,7 @@ const Questions = ({
         })
       );
     }
-  }, [correctAnswer]);
+  }, [correctAnswer, optionLocked]);
 
   // console.log(disable);
   // console.log(optionElements);
